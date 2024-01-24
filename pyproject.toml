@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "meshtastic-mqtt-connect"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11,<3.13"
+meshtastic = "^2.2.19"
+paho-mqtt = "^1.6.1"
+cryptography = "^41.0.7"
+tk = "^0.1.0"
+folium = "^0.15.1"
+appdirs = "^1.4.4"
+
+
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^6.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

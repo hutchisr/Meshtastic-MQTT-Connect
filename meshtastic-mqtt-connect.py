@@ -24,6 +24,12 @@ from cryptography.hazmat.backends import default_backend
 import base64
 import json
 import re
+from appdirs import user_data_dir
+from pathlib import Path
+
+app_name = "Meshtastic MQTT Connect"
+app_author = "pdxlocations"
+
 
 #### Debug Options
 debug = False
@@ -75,11 +81,11 @@ node_info_interval_minutes = 15
 
 #################################
 ### Program variables
-
+user_data = Path(user_data_dir(app_name, app_author))
 default_key = "1PG7OiApB1nwvP+rz05pAQ==" # AKA AQ==
 broadcast_id = 4294967295
-db_file_path = "mmc.db"
-presets_file_path = "presets.json"
+db_file_path = user_data / "mmc.db"
+presets_file_path = user_data /"presets.json"
 presets = {}
 
 #################################
@@ -243,6 +249,7 @@ def preset_var_changed(*args):
 
 def save_presets_to_file():
     if debug: print("save_presets_to_file")
+    presets_file_path.parent.mkdir(parents=True, exist_ok=True)
     with open(presets_file_path, "w") as file:
         json.dump({name: preset.__dict__ for name, preset in presets.items()}, file, indent=2)
 
@@ -606,6 +613,7 @@ def send_ack():
 # Create database table for NodeDB & Messages
 def setup_db():
     if debug: print("setup_db")
+    db_file_path.parent.mkdir(parents=True, exist_ok=True)
     global db_connection
     with sqlite3.connect(db_file_path) as db_connection:
         db_cursor = db_connection.cursor()
